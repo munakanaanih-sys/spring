@@ -1,4 +1,8 @@
-<title>مختبر النابض</title>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<title>مختبر النابض الافتراضي</title>
+<meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Reem+Kufi:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -136,19 +140,46 @@ details.teacher summary{cursor:pointer;color:var(--muted)}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
 .err{color:var(--bad);font-size:14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0 20px}
+.lbl{font-weight:700;display:block;margin:14px 0 6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.keys{display:flex;gap:24px;flex-wrap:wrap;margin:10px 0}
+.keys .code{font-size:26px}
+.pill{font-size:12.5px;padding:2px 10px;border-radius:99px;background:var(--line);color:var(--ink);white-space:nowrap}
+.pill.submitted{background:var(--ok-soft);color:var(--ok)} .pill.started{background:var(--brass-soft);color:var(--brass)}
+.btn.mini{padding:3px 10px;font-size:13px}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.brandmark{width:44px;height:44px;flex:none;border-radius:10px;background:var(--steel-soft);display:grid;place-items:center}
+@media print{header.top,.noprint,footer.sig{display:none!important}.card{border:0;padding:0}body{background:#fff;color:#000}table.data th{background:#eee!important;color:#000!important}}
+
+.prof{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin:8px 0}
+.pcol{border:1px solid var(--line);border-inline-start:4px solid var(--line);border-radius:10px;padding:10px 14px}
+.pcol.good{border-inline-start-color:var(--ok);background:var(--ok-soft)} .pcol.weak{border-inline-start-color:var(--bad);background:var(--bad-soft)}
+.pcol ul{margin:6px 0 0;padding-inline-start:18px} .pcol li{margin:3px 0}
+.bars{display:grid;gap:6px;margin:8px 0}
+.bar{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(80px,1fr) 44px;gap:10px;align-items:center;font-size:13.5px}
+.bar .bl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .bt{height:12px;border-radius:6px;background:var(--line);overflow:hidden;display:block}
+.bar .bt i{display:block;height:100%;border-radius:6px}
+.bar .bt i.low{background:var(--bad)} .bar .bt i.mid{background:var(--brass)} .bar .bt i.high{background:var(--ok)}
+.bar .bv{font-family:var(--f-mono);text-align:end}
+@media (max-width:520px){.bar{grid-template-columns:1fr 44px}.bar .bl{grid-column:1/-1;white-space:normal}}
 </style>
 
+
+</head>
+<body>
 <header class="top">
   <div class="topin">
-    <img class="logo" alt="شعار المدرسة" src="data:image/jpeg;base64,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">
-    <div class="brand"><b>مختبر النابض الافتراضي</b><small>مدرسة البخاري الشاملة – عرابة · إيجاد ثابت النابض</small></div>
+    <div class="brandmark" aria-hidden="true"><svg viewBox="0 0 24 40" width="18" height="30"><path d="M12 1v4 l8 2.5 -16 3 16 3 -16 3 16 3 -16 3 16 3 -8 2.5v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" style="color:var(--steel)"/><rect x="6" y="33" width="12" height="6" rx="1.5" fill="var(--brass)"/></svg></div>
+    <div class="brand"><b>مختبر النابض الافتراضي</b><small>اختبار محوسب في البحث العلمي · إيجاد ثابت النابض</small></div>
     <div class="who" id="who" hidden></div>
   </div>
   <div class="rail" id="rail"></div>
 </header>
 <main class="wrap" id="app"></main>
-<div class="wrap"><footer class="sig">بإرشاد المعلمة: <b>منى مصطفى</b></footer></div>
-
+<div class="wrap"><footer class="sig">إعداد المعلمة: <b>منى مصطفى</b></footer></div>
 <script>
 'use strict';
 // ---------- utilities ----------
@@ -280,180 +311,26 @@ function answered(it) {
   if (it.type === 'lab') return S.read.every(row => row.every(x => String(x ?? '').trim() !== ''));
   if (it.type === 'upload') return !!S.ans.x0;
 }
-const save = () => S && store.set('springlab:' + norm(S.name), S);
 
-// ---------- platform (shared store for grades) ----------
-let DB = null, USER = null, UID = null, IS_OWNER = false;
-const platformReady = (async () => {
-  if (!(window.claude && claude.use)) return;
-  try { USER = await claude.use('user'); } catch {}
-  try { DB = await claude.use('db'); } catch {}
-  try { if (USER) { UID = await USER.id(); IS_OWNER = !!(await USER.isOwner()); } } catch {}
-  if (!UID) DB = null;
-  if (!S && app.dataset.view === 'start') startView();
-})();
-const subRef = () => DB && UID ? DB.doc('submissions/' + UID) : null;
-
-// ---------- views ----------
-const app = $('#app');
+// ---------- totals (used by the page and by the server) ----------
 const TOTAL = ALL.reduce((a, it) => a + weight(it), 0);
 const stepPts = st => st.items.reduce((a, it) => a + weight(it), 0);
 const stepGot = st => st.items.reduce((a, it) => a + weight(it) * grade(it), 0);
 const totalGot = () => Math.round(ALL.reduce((a, it) => a + weight(it) * grade(it), 0));
-const ptsWord = n => n === 1 ? 'علامة واحدة' : n === 2 ? 'علامتان' : n <= 10 ? n + ' علامات' : n + ' علامة';
-
-function rail() {
-  const r = $('#rail'); r.innerHTML = '';
-  if (!S || app.dataset.view === 'teacher') return;
-  STEPS.forEach((s, i) => r.append(h('button', { class: 'rl ' + (i === S.step && app.dataset.view === 'step' ? 'cur' : s.items.every(answered) ? 'done' : ''), title: s.tag + ': ' + s.title, 'aria-label': s.tag,
-    onclick: () => { S.step = i; stepView(); } })));
-}
-
-function startView() {
-  app.dataset.view = 'start';
-  $('#who').hidden = true; rail();
-  const nameIn = h('input', { type: 'text', id: 'nm', placeholder: 'مثال: أحمد محمد ياسين', style: 'width:100%;max-width:420px', autocomplete: 'name' });
-  const err = h('div', { class: 'err' });
-  const go = () => { const n = nameIn.value.trim().replace(/\s+/g, ' ');
-    if (n.split(' ').length < 2) { err.textContent = 'اكتب اسمك الكامل: الاسم الأول واسم العائلة على الأقل.'; return; }
-    begin(n); };
-  nameIn.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
-  const tn = h('input', { type: 'text', id: 'tn', placeholder: 'اسم الطالب كما كتبه' }), tg = h('input', { type: 'number', id: 'tg', placeholder: 'العلامة', style: 'width:100px' }), tc = h('input', { type: 'text', id: 'tc', placeholder: 'الرمز', style: 'width:110px;direction:ltr' });
-  const tr = h('div', { class: 'fb' });
-  app.replaceChildren(h('section', { class: 'card' },
-    h('div', { class: 'eyebrow' }, 'اختبار محوسب · فيزياء · 100 علامة'),
-    h('h1', {}, 'كم ثابت نابضك؟'),
-    h('p', {}, 'في هذا الاختبار لكل طالب نابض خاص به، بثابت مختلف عن نوابض زملائه. ستمرّ على خطوات البحث العلمي العشر: من الملاحظة، إلى التجربة والقياس، إلى الرسم البياني في Excel واستخراج ثابت النابض.'),
-    h('div', { class: 'note' }, h('b', {}, 'تعليمات الاختبار: '), 'تستطيع التنقل بين الخطوات وتعديل إجاباتك حتى تضغط «سلّم الاختبار». بعد التسليم لا يمكن تغيير الإجابات، وتظهر لك علامتك والأسئلة التي أخطأت فيها. التسليم مرة واحدة فقط.'),
-    h('p', { class: 'hint' }, 'اكتب اسمك الكامل بدقة، فهو الذي يحدد نابضك وقياساتك.'),
-    h('label', { for: 'nm', style: 'font-weight:700;display:block;margin:14px 0 6px' }, 'الاسم الكامل'), nameIn, err,
-    h('div', { class: 'actions' }, h('span', { class: 'hint' }, 'نحو 45 دقيقة · تحتاج برنامج Excel للرسم البياني'), h('button', { class: 'btn brass', onclick: go }, 'ابدأ الاختبار')),
-    IS_OWNER && DB ? h('div', { class: 'info', style: 'margin-top:18px' }, h('b', {}, 'أنتِ صاحبة الاختبار. '), 'من هنا ترين علامات كل الطلاب الذين سلّموا.', h('div', { class: 'row' }, h('button', { class: 'btn', onclick: teacherView }, 'لوحة المعلمة: علامات الطلاب'))) : null,
-    h('details', { class: 'teacher' }, h('summary', {}, 'للمعلمة: التحقق من رمز علامة'),
-      h('div', { class: 'row' }, tn, tg, tc, h('button', { class: 'btn ghost', style: 'padding:6px 14px', onclick: () => {
-        const ok = tc.value.trim().toUpperCase() === verify(tn.value, String(Math.round(+tg.value)));
-        tr.textContent = ok ? '✓ الرمز صحيح: العلامة مطابقة لهذا الاسم.' : '✗ الرمز لا يطابق الاسم والعلامة.'; tr.style.color = ok ? 'var(--ok)' : 'var(--bad)'; } }, 'تحقق')), tr)));
-}
-
-async function begin(name) {
-  // one submission per account when the shared store is available
-  const ref = subRef();
-  if (ref) { try { const snap = await ref.get(); if (snap.exists) { const d = snap.data(); return lockedOut(d); } } catch {} }
-  P = makeParams(name);
-  S = store.get('springlab:' + norm(name)) || { name, step: 0, ans: {}, read: [0, 1, 2].map(() => Array(6).fill('')), submitted: false };
-  S.name = name;
-  $('#who').textContent = name; $('#who').hidden = false;
-  S.submitted ? resultView() : stepView();
-}
-function lockedOut(d) {
-  app.dataset.view = 'start';
-  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'تم التسليم مسبقاً'), h('h2', {}, d.name),
-    h('p', {}, 'سلّمت هذا الاختبار من حسابك بتاريخ ', new Date(d.submittedAt).toLocaleString('ar', { dateStyle: 'medium', timeStyle: 'short' }), '. التسليم مرة واحدة فقط.'),
-    h('div', { class: 'grade' }, h('div', { class: 'big' }, String(d.grade)), h('div', {}, 'العلامة من 100')),
-    d.wrong && d.wrong.length ? h('div', {}, h('h3', {}, 'الأسئلة التي أخطأت فيها'), h('ul', { class: 'wrongs' }, ...d.wrong.map(w => h('li', {}, h('b', {}, w.tag + ': '), w.q, h('span', { class: 'hint' }, ` (${fmt(w.got, 1)} من ${w.max})`))))) : null,
-    h('div', { class: 'actions' }, h('span'), h('button', { class: 'btn ghost', onclick: startView }, 'رجوع'))));
-}
-
-let labCtl = null, cur = null;
-function stepView() {
-  if (labCtl) { labCtl.stop(); labCtl = null; }
-  app.dataset.view = 'step'; rail(); save();
-  const st = STEPS[S.step], locked = !!S.submitted;
-  const card = h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, st.tag + ' من خطوات البحث العلمي · ' + ptsWord(stepPts(st))), h('h2', {}, st.title), ...st.intro());
-  if (st.excel) card.append(excelBlock());
-  let n = 0;
-  for (const it of st.items) card.append(itemView(it, ++n, locked));
-  const last = S.step === STEPS.length - 1;
-  const back = h('button', { class: 'btn ghost', disabled: S.step === 0, onclick: () => { S.step--; stepView(); window.scrollTo({ top: 0 }); } }, 'السابق');
-  const next = h('button', { class: 'btn' + (last && !locked ? ' brass' : ''), onclick: () => { if (!last) { S.step++; stepView(); window.scrollTo({ top: 0 }); } else locked ? resultView() : submitView(); } },
-    last ? (locked ? 'العودة إلى النتيجة' : 'إنهاء وتسليم') : 'الخطوة التالية');
-  const hint = h('span', { class: 'hint' });
-  card._refresh = () => { const left = st.items.filter(it => !answered(it)).length; hint.textContent = locked ? `علاماتك في هذه الخطوة: ${fmt(stepGot(st), 1)} من ${stepPts(st)}` : left ? `بقي ${left} ${left === 1 ? 'سؤال' : 'أسئلة'} دون إجابة في هذه الخطوة` : 'أجبت عن كل أسئلة هذه الخطوة'; rail(); };
-  card.append(h('div', { class: 'actions' }, back, hint, next));
-  if (locked) card.prepend(h('div', { class: 'note', style: 'margin-top:0' }, 'وضع المراجعة: الإجابات مقفلة. ✗ يعني إجابة خاطئة.'));
-  app.replaceChildren(card);
-  cur = card; card._refresh();
-}
-const changed = () => { save(); cur && cur._refresh && cur._refresh(); };
-
-function markEl(it) { const g = grade(it); return h('span', { class: 'mark ' + (g >= 0.999 ? 'ok' : g > 0 ? 'part' : 'bad') }, g >= 0.999 ? '✓ ' + fmt(weight(it), 1) : g > 0 ? `${fmt(g * weight(it), 1)} من ${weight(it)}` : '✗ 0'); }
-
-function itemView(it, n, locked) {
-  const qtext = typeof it.q === 'function' ? it.q() : it.q;
-  const box = h('div', { class: 'q', id: 'q-' + it.id }, h('div', { class: 'qh' }, h('span', { class: 'qn' }, String(n)), h('span', {}, qtext), locked ? markEl(it) : h('span', { class: 'pts' }, ptsWord(weight(it)))));
-  const r = rngFrom(P.seed ^ fnv(it.id));
-  if (it.type === 'mcq' || it.type === 'multi') {
-    const multi = it.type === 'multi', opts = shuffle([...(multi ? it.a : [it.a]), ...it.d], r);
-    const wrap = h('div', { class: 'opts', role: multi ? 'group' : 'radiogroup' });
-    const draw = () => { wrap.replaceChildren(...opts.map(o => { const v = S.ans[it.id];
-      const sel = multi ? (v || []).includes(o) : v === o; const isA = multi ? it.a.includes(o) : o === it.a;
-      let cls = 'opt' + (multi ? ' multi' : '') + (sel ? ' sel' : '');
-      if (locked && sel) cls += isA ? ' right' : ' wrong';   // only the student's own choices are marked
-      return h('button', { class: cls, disabled: locked, 'aria-pressed': sel ? 'true' : 'false', onclick: () => {
-        if (multi) { const s = new Set(S.ans[it.id] || []); s.has(o) ? s.delete(o) : s.add(o); S.ans[it.id] = [...s]; } else S.ans[it.id] = o; draw(); changed(); } }, h('span', { class: 'dot' }), h('span', { dir: 'auto' }, o)); })); };
-    draw(); box.append(wrap);
-    if (multi && !locked) box.append(h('div', { class: 'fb' }, 'قد يكون أكثر من جواب صحيح. كل اختيار خاطئ يُنقص من العلامة.'));
-  }
-  if (it.type === 'cloze') box.append(clozeView(it, r, locked));
-  if (it.type === 'classify') {
-    const wrap = h('div', { class: 'cls' }); const v = S.ans[it.id] || (S.ans[it.id] = []);
-    const rows = shuffle(it.rows.map((row, i) => [row, i]), r);
-    const draw = () => wrap.replaceChildren(...rows.map(([row, i]) => h('div', { class: 'clsrow' }, h('span', {}, row[0]),
-      h('div', { class: 'seg' }, ...it.cats.map((c, ci) => { let cls = v[i] === ci ? 'sel' : ''; if (locked && v[i] === ci) cls = ci === row[1] ? 'right' : 'wrong';
-        return h('button', { class: cls, disabled: locked, onclick: () => { v[i] = ci; draw(); changed(); } }, c); })))));
-    draw(); box.append(wrap);
-  }
-  if (it.type === 'order') {
-    if (!S.ans[it.id]) { let o; do { o = shuffle(it.a, r); } while (o.every((x, i) => x === it.a[i])); S.ans[it.id] = o; }
-    const ol = h('ol', { class: 'order' });
-    const draw = () => { const v = S.ans[it.id]; ol.replaceChildren(...v.map((t, i) => h('li', { class: locked ? (t === it.a[i] ? 'right' : 'wrong') : '' }, h('span', { class: 'n' }, String(i + 1)), h('span', { class: 't' }, t),
-      locked ? null : h('span', { class: 'mv' }, h('button', { 'aria-label': 'إلى الأعلى', disabled: i === 0, onclick: () => { [v[i - 1], v[i]] = [v[i], v[i - 1]]; draw(); changed(); } }, '▲'),
-        h('button', { 'aria-label': 'إلى الأسفل', disabled: i === v.length - 1, onclick: () => { [v[i + 1], v[i]] = [v[i], v[i + 1]]; draw(); changed(); } }, '▼'))))); };
-    draw(); box.append(ol);
-    if (!locked) box.append(h('div', { class: 'fb' }, 'تُحسب العلامة حسب عدد الخطوات الموجودة في مكانها الصحيح.'));
-  }
-  if (it.type === 'num') {
-    const inp = h('input', { type: 'text', inputmode: 'decimal', id: 'in-' + it.id, value: S.ans[it.id] ?? '', disabled: locked, class: locked ? (grade(it) ? 'right' : 'wrong') : '' });
-    inp.addEventListener('input', () => { S.ans[it.id] = inp.value; changed(); });
-    box.append(h('div', { class: 'num' }, inp, h('span', { class: 'unit' }, it.unit)));
-  }
-  if (it.type === 'lab') box.append(labView(locked));
-  if (it.type === 'upload') box.append(uploadView(locked));
-  return box;
-}
-
-function submitView() {
-  app.dataset.view = 'submit'; rail();
-  const missing = STEPS.map((s, i) => ({ s, i, left: s.items.filter(it => !answered(it)).length })).filter(x => x.left);
-  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'قبل التسليم'), h('h2', {}, 'هل أنت متأكد أنك تريد تسليم الاختبار؟'),
-    missing.length ? h('div', { class: 'note' }, h('b', {}, 'ما زالت هناك أسئلة دون إجابة، وستحصل فيها على صفر:'),
-      h('ul', {}, ...missing.map(x => h('li', {}, h('a', { href: '#', onclick: e => { e.preventDefault(); S.step = x.i; stepView(); } }, `${x.s.tag}: ${x.s.title}`), ` (${x.left})`))))
-      : h('div', { class: 'info' }, 'أجبت عن كل الأسئلة.'),
-    h('p', {}, 'بعد التسليم لا يمكن تغيير الإجابات، والتسليم مرة واحدة فقط.'),
-    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => stepView() }, 'رجوع إلى الأسئلة'), h('button', { class: 'btn brass', id: 'confirm', onclick: doSubmit }, 'نعم، سلّم الاختبار'))));
-}
-async function doSubmit() {
-  const btn = $('#confirm'); if (btn) { btn.disabled = true; btn.textContent = 'جارٍ التسليم…'; }
-  S.submitted = true; S.submittedAt = new Date().toISOString(); save();
-  S.sent = false;
-  const ref = subRef();
-  if (ref) {
-    const d = myData();
-    const doc = { name: S.name, grade: totalGot(), total: TOTAL, submittedAt: S.submittedAt, kTrue: P.k, kStudent: S.ans.a5 || '', slopeStudent: S.ans.a4 || '',
-      readingsOk: Math.round(grade({ type: 'lab' }) * 18), readings: S.read.map(r => r.join(' | ')),
-      steps: STEPS.map(s => ({ tag: s.tag, title: s.title, got: +stepGot(s).toFixed(2), max: stepPts(s) })),
-      wrong: wrongList().map(w => ({ tag: w.st.tag, q: w.q, got: +w.got.toFixed(2), max: w.max })), graph: S.graph || '' };
-    try { await ref.set(doc); S.sent = true; } catch (e) { try { delete doc.graph; await ref.set(doc); S.sent = true; } catch { S.sent = false; } }
-    save();
-  }
-  resultView();
-}
 function wrongList() {
   const out = [];
   STEPS.forEach((st, si) => st.items.forEach(it => { const g = grade(it); if (g < 0.999) out.push({ st, si, it, q: typeof it.q === 'function' ? it.q() : it.q, got: g * weight(it), max: weight(it) }); }));
   return out;
 }
+function scoreAll() {
+  return { grade: totalGot(), total: TOTAL, kTrue: P.k, readingsOk: Math.round(grade({ type: 'lab' }) * 18),
+    steps: STEPS.map(s => ({ tag: s.tag, title: s.title, got: +stepGot(s).toFixed(2), max: stepPts(s) })),
+    wrong: wrongList().map(w => ({ si: w.si, id: w.it.id, tag: w.st.tag, q: w.q, got: +w.got.toFixed(2), max: w.max })) };
+}
 
+</script>
+
+<script>
 // cloze with a word bank: drag on desktop, tap-to-place everywhere
 function clozeView(it, r, locked) {
   const v = S.ans[it.id] || (S.ans[it.id] = []);
@@ -556,34 +433,7 @@ function labView(locked) {
   return out;
 }
 
-// ---------- Excel step ----------
-function excelBlock() {
-  const d = myData();
-  const head = ['الكتلة m (g)', 'القوة F (N)', 'ΔL محاولة 1 (cm)', 'ΔL محاولة 2 (cm)', 'ΔL محاولة 3 (cm)', 'معدل ΔL (cm)', 'معدل ΔL (m)'];
-  const rows = d.rows.map(r => [r.m, r.F, ...r.dl.map(x => isFinite(x) ? +x.toFixed(2) : ''), isFinite(r.avg) ? +r.avg.toFixed(2) : '', isFinite(r.avg) ? +(r.avg / 100).toFixed(4) : '']);
-  const msg = h('div', { class: 'fb' });
-  const dl = h('button', { class: 'btn brass', hidden: true, onclick: async () => {
-    try { const ws = XLSX.utils.aoa_to_sheet([head, ...rows]); ws['!cols'] = head.map(() => ({ wch: 17 })); const wb = XLSX.utils.book_new(); wb.Workbook = { Views: [{ RTL: true }] };
-      XLSX.utils.book_append_sheet(wb, ws, 'نتائجي'); const buf = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
-      await downloads.save({ filename: 'نتائج النابض - ' + S.name + '.xlsx', data: new Blob([buf]) }); msg.textContent = 'تم حفظ الملف. افتحه في Excel.'; }
-    catch (e) { msg.textContent = e && e.code === 'declined' ? 'لم يُحفظ الملف.' : 'تعذّر حفظ الملف هنا. استعمل زر النسخ بدلاً منه.'; } } }, 'نزّل ملف Excel بنتائجك');
-  let downloads = null;
-  if (window.claude && claude.use && typeof XLSX !== 'undefined') claude.use('downloads').then(x => { downloads = x; if (x) dl.hidden = false; }).catch(() => {});
-  const copy = h('button', { class: 'btn ghost', onclick: async () => { const tsv = [head, ...rows].map(r => r.join('\t')).join('\n');
-    try { await navigator.clipboard.writeText(tsv); msg.textContent = 'تم النسخ. افتح Excel جديداً والصق في الخلية A1.'; } catch { pre.hidden = false; const rg = document.createRange(); rg.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(rg); msg.textContent = 'حدّد الجدول الظاهر وانسخه يدوياً.'; } } }, 'انسخ النتائج للصقها في Excel');
-  const pre = h('pre', { hidden: true, style: 'direction:ltr;overflow-x:auto;background:var(--bg);padding:8px;border-radius:8px;font-size:12px' }, [head, ...rows].map(r => r.join('\t')).join('\n'));
-  const tbl = h('div', { class: 'tblw' }, h('table', { class: 'data' }, h('thead', {}, h('tr', {}, ...head.map(x => h('th', {}, x)))), h('tbody', {}, ...rows.map(r => h('tr', {}, ...r.map(x => h('td', {}, String(x))))))));
-  return h('div', {},
-    h('p', {}, 'هذه نتائجك من التجربة بعد حساب القوة والاستطالة. انقلها إلى Excel وأنشئ رسماً بيانياً:'), tbl,
-    h('div', { class: 'row', style: 'margin:12px 0' }, dl, copy), msg, pre,
-    h('div', { class: 'info' }, h('b', {}, 'خطوات الرسم في Excel'),
-      h('ol', { class: 'steps' },
-        h('li', {}, 'حدّد عمود «القوة F (N)»، ثم اضغط Ctrl وحدّد عمود «معدل ΔL (m)».'),
-        h('li', {}, 'إدراج ← مخطط مبعثر (Scatter) بالنقاط فقط.'),
-        h('li', {}, 'تأكد أن القوة على المحور الأفقي والاستطالة على المحور العمودي، وأضف عنواناً لكل محور مع الوحدة.'),
-        h('li', {}, 'اضغط بالزر الأيمن على النقاط ← إضافة خط اتجاه (Trendline) ← خطي، وفعّل «عرض المعادلة على المخطط».'),
-        h('li', {}, 'خذ صورة للمخطط (أو احفظه كصورة) وارفعها هنا.'))));
-}
+
 function uploadView(locked) {
   const img = h('img', { alt: 'الرسم البياني الذي رفعه الطالب', hidden: true });
   if (S.graph) { img.src = S.graph; img.hidden = false; }
@@ -595,79 +445,377 @@ function uploadView(locked) {
   return h('div', { class: 'up' }, locked ? null : inp, info, img);
 }
 
-// ---------- result ----------
+
+
+// ---------- server bridge ----------
+// ===== رابط الخادم (Google Apps Script) =====
+// إذا نشرتِ الخادم من مشروع آخر، ضعي هنا الرابط الجديد الذي ينتهي بـ /exec
+const API_URL = 'https://script.google.com/macros/s/AKfycbwbjK5_8iSS5mcYsdOEfVeptrI9BvIpzTb26o9Hj01vwwc6BF8QdxycreD1UKMVPkwg/exec';
+const SITE_URL = location.protocol.startsWith('http') ? location.origin + location.pathname : '';
+async function call(fn, ...args) {
+  let res, data;
+  try { res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fn, args }) }); }
+  catch (e) { throw new Error('لا يوجد اتصال بالخادم. تأكد من الإنترنت وحاول مرة أخرى.'); }
+  try { data = await res.json(); } catch (e) { throw new Error('الخادم لم يردّ كما يجب. تأكدي أن الخادم منشور بإصدار جديد وأن الوصول «כולם».'); }
+  if (!data || !data.ok) throw new Error((data && data.error) || 'حدث خطأ في الخادم.');
+  return data.result;
+}
+const errText = e => String((e && e.message) || e).replace(/^Error:\s*/, '').replace(/^Exception:\s*/, '');
+const fmtCode = s => { const x = String(s).toUpperCase().replace(/[^A-Z0-9]/g, ''); return x.length === 6 ? x.slice(0, 3) + '-' + x.slice(3) : x; };
+const save = () => S && S.code && store.set('springlab:' + S.code, S);
+const app = $('#app');
+const ptsWord = n => n === 1 ? 'علامة واحدة' : n === 2 ? 'علامتان' : n <= 10 ? n + ' علامات' : n + ' علامة';
+const dt = iso => iso ? new Date(iso).toLocaleString('ar', { dateStyle: 'medium', timeStyle: 'short' }) : '—';
+function busy(btn, on, label) { if (!btn) return; if (on) { btn.dataset.l = btn.textContent; btn.textContent = label || 'لحظة…'; btn.disabled = true; } else { btn.textContent = btn.dataset.l || btn.textContent; btn.disabled = false; } }
+function downloadText(filename, text, mime) {
+  try { const a = h('a', { href: URL.createObjectURL(new Blob([text], { type: mime })), download: filename }); document.body.append(a); a.click(); a.remove(); return true; } catch { return false; }
+}
+function copyBox(text) { // visible, selectable fallback for copying
+  const ta = h('textarea', { readonly: true, style: 'width:100%;min-height:120px;direction:ltr;font-family:var(--f-mono);font-size:12px' }); ta.value = text;
+  setTimeout(() => { ta.focus(); ta.select(); }, 30); return ta;
+}
+async function copyText(text, msgEl, holder) {
+  try { await navigator.clipboard.writeText(text); msgEl.textContent = 'تم النسخ. الصق في Excel في الخلية A1.'; }
+  catch { holder.replaceChildren(copyBox(text)); msgEl.textContent = 'النص محدّد في المربع: اضغط Ctrl+C لنسخه.'; }
+}
+
+// ---------- home ----------
+function rail() {
+  const r = $('#rail'); r.innerHTML = '';
+  if (!S || !['step', 'submit'].includes(app.dataset.view)) return;
+  STEPS.forEach((s, i) => r.append(h('button', { class: 'rl ' + (i === S.step && app.dataset.view === 'step' ? 'cur' : s.items.every(answered) ? 'done' : ''), title: s.tag + ': ' + s.title, 'aria-label': s.tag,
+    onclick: () => { if (S.submitted) return; S.step = i; stepView(); } })));
+}
+function setWho(t) { $('#who').textContent = t || ''; $('#who').hidden = !t; }
+
+function homeView() {
+  app.dataset.view = 'home'; S = null; P = null; setWho(''); rail();
+  const codeIn = h('input', { type: 'text', id: 'scode', placeholder: '7QX-K4F', autocomplete: 'off', style: 'direction:ltr;text-align:center;font-family:var(--f-mono);font-size:20px;letter-spacing:.1em;width:100%;max-width:260px' });
+  const err = h('div', { class: 'err' });
+  const go = h('button', { class: 'btn brass' }, 'ادخل إلى الاختبار');
+  const start = async () => { const code = fmtCode(codeIn.value); err.textContent = '';
+    if (!/^[A-Z0-9]{3}-[A-Z0-9]{3}$/.test(code)) { err.textContent = 'رمز الطالب مكوّن من 6 خانات، مثل 7QX-K4F.'; return; }
+    busy(go, true, 'جارٍ التحقق…');
+    try { const r = await call('studentStart', code); busy(go, false);
+      if (r.status === 'submitted') return lockedOut(code, r.result);
+      beginExam(code, r); } catch (e) { busy(go, false); err.textContent = errText(e); } };
+  go.onclick = start; codeIn.addEventListener('keydown', e => { if (e.key === 'Enter') start(); });
+  app.replaceChildren(
+    h('section', { class: 'card' },
+      h('div', { class: 'eyebrow' }, 'اختبار محوسب · فيزياء · 100 علامة'),
+      h('h1', {}, 'كم ثابت نابضك؟'),
+      h('p', {}, 'في هذا الاختبار لكل طالب نابض خاص به، بثابت مختلف عن نوابض زملائه. ستمرّ على خطوات البحث العلمي العشر: من الملاحظة، إلى التجربة والقياس، إلى الرسم البياني في Excel واستخراج ثابت النابض.')),
+    h('div', { class: 'two' },
+      h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'للطالب'), h('h2', {}, 'ادخل برمزك'),
+        h('p', { class: 'hint' }, 'اكتب الرمز الذي أعطاك إياه معلمك. الرمز يُستعمل لتسليم واحد فقط.'),
+        h('label', { for: 'scode', class: 'lbl' }, 'رمز الطالب'), codeIn, err, h('div', { class: 'row', style: 'margin-top:14px' }, go)),
+      h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'للمعلم'), h('h2', {}, 'صفّي وعلامات طلابي'),
+        h('p', { class: 'hint' }, 'سجّل صفاً جديداً لتحصل على رموز لطلابك، أو ادخل إلى لوحة صفك لترى العلامات.'),
+        h('div', { class: 'row', style: 'margin-top:14px' }, h('button', { class: 'btn', onclick: registerView }, 'تسجيل صف جديد'), h('button', { class: 'btn ghost', onclick: () => loginView() }, 'دخول إلى لوحة الصف')))));
+  setTimeout(() => codeIn.focus(), 50);
+}
+
+// ---------- student ----------
+function beginExam(code, info) {
+  P = makeParams(code);
+  S = store.get('springlab:' + code) || { code, step: 0, ans: {}, read: [0, 1, 2].map(() => Array(6).fill('')), submitted: false };
+  S.code = code; S.label = info.label || S.label || ''; S.seat = info.seat || S.seat;
+  setWho('رمز ' + code + (S.label ? ' · ' + S.label : ''));
+  if (S.submitted && S.result) return resultView();
+  S.submitted = false;
+  if (S.step === 0 && !S.ans.o1) return introView();
+  stepView();
+}
+function introView() {
+  app.dataset.view = 'intro'; rail();
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, S.label ? 'الصف: ' + S.label : 'تعليمات'), h('h2', {}, 'قبل أن تبدأ'),
+    h('ul', { class: 'steps' },
+      h('li', {}, 'الاختبار من 100 علامة، موزّعة على 11 قسماً. بجانب كل سؤال تظهر علاماته.'),
+      h('li', {}, 'تستطيع التنقل بين الأقسام وتعديل إجاباتك حتى تضغط «إنهاء وتسليم».'),
+      h('li', {}, 'إجاباتك تُحفظ على هذا الجهاز. إذا انقطعت، ادخل برمزك من نفس الجهاز لتكمل.'),
+      h('li', {}, 'التسليم مرة واحدة فقط. بعده تظهر علامتك والأسئلة التي أخطأت فيها.'),
+      h('li', {}, 'ستحتاج برنامج Excel في القسم 9 لرسم الرسم البياني.')),
+    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: homeView }, 'خروج'), h('button', { class: 'btn brass', onclick: () => stepView() }, 'ابدأ الاختبار'))));
+}
+function lockedOut(code, r) {
+  app.dataset.view = 'locked'; S = null; setWho('رمز ' + code); rail();
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'تم التسليم مسبقاً'), h('h2', {}, 'هذا الرمز سُلّم به الاختبار'),
+    h('p', {}, 'تاريخ التسليم: ', dt(r.submittedAt), '. التسليم مرة واحدة فقط.'),
+    h('div', { class: 'grade' }, h('div', { class: 'big' }, String(r.grade)), h('div', {}, 'العلامة من 100')),
+    r.wrong && r.wrong.length ? h('div', {}, h('h3', {}, `الأسئلة التي أخطأت فيها (${r.wrong.length})`), h('ul', { class: 'wrongs' }, ...r.wrong.map(w => h('li', {}, h('b', {}, w.tag + ': '), w.q, h('span', { class: 'hint' }, ` (${fmt(w.got, 1)} من ${w.max})`))))) : null,
+    h('div', { class: 'actions' }, h('span'), h('button', { class: 'btn ghost', onclick: homeView }, 'رجوع'))));
+}
+
+let labCtl = null, cur = null;
+function stepView() {
+  if (labCtl) { labCtl.stop(); labCtl = null; }
+  app.dataset.view = 'step'; save();
+  const st = STEPS[S.step], locked = !!S.submitted;
+  const card = h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, st.tag + ' من خطوات البحث العلمي · ' + ptsWord(stepPts(st))), h('h2', {}, st.title), ...st.intro());
+  if (st.excel) card.append(excelBlock(locked));
+  let n = 0;
+  for (const it of st.items) card.append(itemView(it, ++n, locked));
+  const last = S.step === STEPS.length - 1;
+  const back = h('button', { class: 'btn ghost', disabled: S.step === 0, onclick: () => { S.step--; stepView(); window.scrollTo({ top: 0 }); } }, 'السابق');
+  const next = h('button', { class: 'btn' + (last && !locked ? ' brass' : ''), onclick: () => { if (!last) { S.step++; stepView(); window.scrollTo({ top: 0 }); } else locked ? resultView() : submitView(); } },
+    last ? (locked ? 'العودة إلى النتيجة' : 'إنهاء وتسليم') : 'الخطوة التالية');
+  const hint = h('span', { class: 'hint' });
+  card._refresh = () => { const left = st.items.filter(it => !answered(it)).length; hint.textContent = locked ? `علاماتك في هذا القسم: ${fmt(stepGot(st), 1)} من ${stepPts(st)}` : left ? `بقي ${left} ${left === 1 ? 'سؤال' : 'أسئلة'} دون إجابة في هذا القسم` : 'أجبت عن كل أسئلة هذا القسم'; rail(); };
+  card.append(h('div', { class: 'actions' }, back, hint, next));
+  if (locked) card.prepend(h('div', { class: 'note', style: 'margin-top:0' }, 'وضع المراجعة: الإجابات مقفلة. الإجابة الخاطئة معلّمة بالأحمر.', h('div', { class: 'row' }, h('button', { class: 'btn ghost', style: 'padding:5px 12px', onclick: resultView }, 'العودة إلى النتيجة'))));
+  app.replaceChildren(card);
+  cur = card; card._refresh();
+}
+const changed = () => { save(); cur && cur._refresh && cur._refresh(); };
+function markEl(it) { const g = grade(it); return h('span', { class: 'mark ' + (g >= 0.999 ? 'ok' : g > 0 ? 'part' : 'bad') }, g >= 0.999 ? '✓ ' + fmt(weight(it), 1) : g > 0 ? `${fmt(g * weight(it), 1)} من ${weight(it)}` : '✗ 0'); }
+
+function itemView(it, n, locked) {
+  const qtext = typeof it.q === 'function' ? it.q() : it.q;
+  const box = h('div', { class: 'q', id: 'q-' + it.id }, h('div', { class: 'qh' }, h('span', { class: 'qn' }, String(n)), h('span', {}, qtext), locked ? markEl(it) : h('span', { class: 'pts' }, ptsWord(weight(it)))));
+  const r = rngFrom(P.seed ^ fnv(it.id));
+  if (it.type === 'mcq' || it.type === 'multi') {
+    const multi = it.type === 'multi', opts = shuffle([...(multi ? it.a : [it.a]), ...it.d], r);
+    const wrap = h('div', { class: 'opts', role: multi ? 'group' : 'radiogroup' });
+    const draw = () => { wrap.replaceChildren(...opts.map(o => { const v = S.ans[it.id];
+      const sel = multi ? (v || []).includes(o) : v === o; const isA = multi ? it.a.includes(o) : o === it.a;
+      let cls = 'opt' + (multi ? ' multi' : '') + (sel ? ' sel' : '');
+      if (locked && sel) cls += isA ? ' right' : ' wrong';
+      return h('button', { class: cls, disabled: locked, 'aria-pressed': sel ? 'true' : 'false', onclick: () => {
+        if (multi) { const s = new Set(S.ans[it.id] || []); s.has(o) ? s.delete(o) : s.add(o); S.ans[it.id] = [...s]; } else S.ans[it.id] = o; draw(); changed(); } }, h('span', { class: 'dot' }), h('span', { dir: 'auto' }, o)); })); };
+    draw(); box.append(wrap);
+    if (multi && !locked) box.append(h('div', { class: 'fb' }, 'قد يكون أكثر من جواب صحيح. كل اختيار خاطئ يُنقص من العلامة.'));
+  }
+  if (it.type === 'cloze') box.append(clozeView(it, r, locked));
+  if (it.type === 'classify') {
+    const wrap = h('div', { class: 'cls' }); const v = S.ans[it.id] || (S.ans[it.id] = []);
+    const rows = shuffle(it.rows.map((row, i) => [row, i]), r);
+    const draw = () => wrap.replaceChildren(...rows.map(([row, i]) => h('div', { class: 'clsrow' }, h('span', {}, row[0]),
+      h('div', { class: 'seg' }, ...it.cats.map((c, ci) => { let cls = v[i] === ci ? 'sel' : ''; if (locked && v[i] === ci) cls = ci === row[1] ? 'right' : 'wrong';
+        return h('button', { class: cls, disabled: locked, onclick: () => { v[i] = ci; draw(); changed(); } }, c); })))));
+    draw(); box.append(wrap);
+  }
+  if (it.type === 'order') {
+    if (!S.ans[it.id]) { let o; do { o = shuffle(it.a, r); } while (o.every((x, i) => x === it.a[i])); S.ans[it.id] = o; }
+    const ol = h('ol', { class: 'order' });
+    const draw = () => { const v = S.ans[it.id]; ol.replaceChildren(...v.map((t, i) => h('li', { class: locked ? (t === it.a[i] ? 'right' : 'wrong') : '' }, h('span', { class: 'n' }, String(i + 1)), h('span', { class: 't' }, t),
+      locked ? null : h('span', { class: 'mv' }, h('button', { 'aria-label': 'إلى الأعلى', disabled: i === 0, onclick: () => { [v[i - 1], v[i]] = [v[i], v[i - 1]]; draw(); changed(); } }, '▲'),
+        h('button', { 'aria-label': 'إلى الأسفل', disabled: i === v.length - 1, onclick: () => { [v[i + 1], v[i]] = [v[i], v[i + 1]]; draw(); changed(); } }, '▼'))))); };
+    draw(); box.append(ol);
+    if (!locked) box.append(h('div', { class: 'fb' }, 'تُحسب العلامة حسب عدد الخطوات الموجودة في مكانها الصحيح.'));
+  }
+  if (it.type === 'num') {
+    const inp = h('input', { type: 'text', inputmode: 'decimal', id: 'in-' + it.id, value: S.ans[it.id] ?? '', disabled: locked, class: locked ? (grade(it) ? 'right' : 'wrong') : '' });
+    inp.addEventListener('input', () => { S.ans[it.id] = inp.value; changed(); });
+    box.append(h('div', { class: 'num' }, inp, h('span', { class: 'unit' }, it.unit)));
+  }
+  if (it.type === 'lab') box.append(labView(locked));
+  if (it.type === 'upload') box.append(uploadView(locked));
+  return box;
+}
+
+function submitView() {
+  app.dataset.view = 'submit'; rail();
+  const missing = STEPS.map((s, i) => ({ s, i, left: s.items.filter(it => !answered(it)).length })).filter(x => x.left);
+  const err = h('div', { class: 'err' });
+  const ok = h('button', { class: 'btn brass', id: 'confirm' }, 'نعم، سلّم الاختبار');
+  ok.onclick = async () => { busy(ok, true, 'جارٍ التسليم…'); err.textContent = '';
+    try { const res = await call('studentSubmit', S.code, { ans: S.ans, read: S.read, graph: S.graph || '' });
+      S.submitted = true; S.result = res; save(); resultView(); }
+    catch (e) { busy(ok, false); err.textContent = 'لم يتم التسليم: ' + errText(e) + ' تأكد من الاتصال بالإنترنت وحاول مرة أخرى. إجاباتك محفوظة.'; } };
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'قبل التسليم'), h('h2', {}, 'هل أنت متأكد أنك تريد تسليم الاختبار؟'),
+    missing.length ? h('div', { class: 'note' }, h('b', {}, 'ما زالت هناك أسئلة دون إجابة، وستحصل فيها على صفر:'),
+      h('ul', {}, ...missing.map(x => h('li', {}, h('a', { href: '#', onclick: e => { e.preventDefault(); S.step = x.i; stepView(); } }, `${x.s.tag}: ${x.s.title}`), ` (${x.left})`))))
+      : h('div', { class: 'info' }, 'أجبت عن كل الأسئلة.'),
+    h('p', {}, 'بعد التسليم لا يمكن تغيير الإجابات، والتسليم مرة واحدة فقط.'), err,
+    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => stepView() }, 'رجوع إلى الأسئلة'), ok)));
+}
+
 function resultView() {
   app.dataset.view = 'result'; rail();
-  const g = totalGot();
-  const when = new Date(S.submittedAt || Date.now()).toLocaleString('ar', { dateStyle: 'medium', timeStyle: 'short' });
-  const wl = wrongList();
-  const tb = h('div', { class: 'tblw' }, h('table', { class: 'data' }, h('thead', {}, h('tr', {}, h('th', {}, 'الخطوة'), h('th', {}, 'العلامة'))),
-    h('tbody', {}, ...STEPS.map(s => h('tr', {}, h('td', { style: 'text-align:start' }, s.tag + ' – ' + s.title), h('td', {}, `${fmt(stepGot(s), 1)} من ${stepPts(s)}`))),
-      h('tr', {}, h('th', { style: 'text-align:start' }, 'المجموع'), h('th', {}, `${g} من ${TOTAL}`)))));
-  const sentNote = subRef() ? (S.sent ? h('div', { class: 'info' }, '✓ وصلت علامتك إلى المعلمة.') : h('div', { class: 'note' }, 'لم نتمكن من إرسال العلامة للمعلمة تلقائياً. خذ صورة شاشة لهذه الصفحة وأرسلها لمعلمتك.', h('div', { class: 'row' }, h('button', { class: 'btn ghost', style: 'padding:6px 14px', onclick: doSubmit }, 'حاول الإرسال مرة أخرى'))))
-    : h('div', { class: 'note' }, 'خذ صورة شاشة لهذه الصفحة وأرسلها لمعلمتك. رمز التحقق مرتبط باسمك وعلامتك.');
+  const r = S.result;
+  const tb = h('div', { class: 'tblw' }, h('table', { class: 'data' }, h('thead', {}, h('tr', {}, h('th', {}, 'القسم'), h('th', {}, 'العلامة'))),
+    h('tbody', {}, ...r.steps.map(s => h('tr', {}, h('td', { style: 'text-align:start' }, s.tag + ' – ' + s.title), h('td', {}, `${fmt(s.got, 1)} من ${s.max}`))),
+      h('tr', {}, h('th', { style: 'text-align:start' }, 'المجموع'), h('th', {}, `${r.grade} من ${r.total}`)))));
+  const open = w => { S.step = w.si; stepView(); setTimeout(() => { const el = document.getElementById('q-' + w.id); el && el.scrollIntoView({ block: 'center' }); }, 50); };
   app.replaceChildren(h('section', { class: 'card' },
-    h('div', { class: 'eyebrow' }, 'تم تسليم الاختبار'), h('h2', {}, S.name),
-    h('div', { class: 'grade' }, h('div', { class: 'big' }, String(g)), h('div', {}, h('div', {}, 'العلامة من 100'), h('div', { class: 'hint' }, when))),
-    h('p', {}, 'ثابت نابضك الحقيقي: ', h('span', { class: 'law' }, P.k + ' N/m'), ' · القيمة التي حسبتها: ', h('span', { class: 'law' }, (S.ans.a5 || '—') + ' N/m')),
-    h('p', {}, 'رمز التحقق: ', h('span', { class: 'code' }, verify(S.name, String(g)))),
-    sentNote,
-    h('h3', {}, wl.length ? `الأسئلة التي أخطأت فيها (${wl.length})` : 'لا توجد أسئلة خاطئة. أحسنت!'),
-    wl.length ? h('ul', { class: 'wrongs' }, ...wl.map(w => h('li', {}, h('a', { href: '#', onclick: e => { e.preventDefault(); S.step = w.si; stepView(); setTimeout(() => { const el = document.getElementById('q-' + w.it.id); el && el.scrollIntoView({ block: 'center' }); }, 50); } }, w.st.tag + ': ', w.q),
+    h('div', { class: 'eyebrow' }, 'تم تسليم الاختبار · وصلت علامتك إلى المعلم'), h('h2', {}, 'نتيجتك'),
+    h('div', { class: 'grade' }, h('div', { class: 'big' }, String(r.grade)), h('div', {}, h('div', {}, 'العلامة من 100'), h('div', { class: 'hint' }, dt(r.submittedAt)))),
+    h('p', {}, 'ثابت نابضك الحقيقي: ', h('span', { class: 'law' }, r.kTrue + ' N/m'), ' · القيمة التي حسبتها: ', h('span', { class: 'law' }, (r.kStudent || '—') + ' N/m')),
+    h('h3', {}, 'نقاط قوتك وضعفك'), profileView(r.steps, 'الطالب'),
+    h('h3', {}, r.wrong.length ? `الأسئلة التي أخطأت فيها (${r.wrong.length})` : 'لا توجد أسئلة خاطئة. أحسنت!'),
+    r.wrong.length ? h('ul', { class: 'wrongs' }, ...r.wrong.map(w => h('li', {}, h('a', { href: '#', onclick: e => { e.preventDefault(); open(w); } }, w.tag + ': ', w.q),
       h('span', { class: 'hint' }, w.got > 0 ? ` (حصلت على ${fmt(w.got, 1)} من ${w.max})` : ` (0 من ${w.max})`)))) : null,
-    h('p', { class: 'hint' }, 'اضغط على سؤال لتراه مع إجابتك. الإجابة الخاطئة معلّمة بالأحمر.'),
-    S.graph ? h('div', { class: 'up' }, h('span', { class: 'hint' }, 'رسمك البياني:'), h('img', { src: S.graph, alt: 'الرسم البياني' })) : null,
+    r.wrong.length ? h('p', { class: 'hint' }, 'اضغط على سؤال لتراه مع إجابتك.') : null,
     tb,
-    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => { S.step = 0; stepView(); } }, 'راجع كل الأسئلة'), h('button', { class: 'btn ghost', onclick: () => { S = null; P = null; startView(); } }, 'خروج'))));
+    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => { S.step = 0; stepView(); } }, 'راجع كل الأسئلة'), h('button', { class: 'btn ghost', onclick: homeView }, 'خروج'))));
 }
 
-// ---------- teacher dashboard ----------
-let teacherUnsub = null;
-function teacherView() {
-  if (!DB || !IS_OWNER) return startView();
-  app.dataset.view = 'teacher'; S = null; P = null; rail(); $('#who').hidden = true;
-  const sum = h('div', { class: 'stats' }), list = h('div', { class: 'tblw' }), detail = h('div');
-  const msg = h('div', { class: 'fb' });
-  let rows = [], sortBy = 'name';
-  const exportBtn = h('button', { class: 'btn ghost', hidden: true, onclick: async () => {
-    const head = ['الاسم', 'العلامة', 'تاريخ التسليم', 'k الحقيقي', 'k الطالب', ...STEPS.map(s => s.tag)];
-    const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
-    const csv = '﻿' + [head, ...rows.map(r => [r.name, r.grade, new Date(r.submittedAt).toLocaleString('ar'), r.kTrue, r.kStudent, ...(r.steps || []).map(s => s.got)])].map(r => r.map(esc).join(',')).join('\n');
-    try { const dl = await claude.use('downloads'); if (!dl) throw 0; await dl.save({ filename: 'علامات اختبار النابض.csv', data: csv }); msg.textContent = 'تم حفظ الملف.'; }
-    catch (e) { msg.textContent = e && e.code === 'declined' ? 'لم يُحفظ الملف.' : 'تعذّر حفظ الملف هنا.'; } } }, 'نزّل العلامات (Excel/CSV)');
-  claude.use('downloads').then(x => { if (x) exportBtn.hidden = false; }).catch(() => {});
-  const draw = () => {
-    const sorted = rows.slice().sort((a, b) => sortBy === 'grade' ? b.grade - a.grade : sortBy === 'date' ? b.submittedAt.localeCompare(a.submittedAt) : a.name.localeCompare(b.name, 'ar'));
-    const gs = rows.map(r => r.grade);
-    sum.replaceChildren(...[['طلاب سلّموا', rows.length], ['المعدل', gs.length ? fmt(gs.reduce((a, b) => a + b, 0) / gs.length, 1) : '—'], ['أعلى علامة', gs.length ? Math.max(...gs) : '—'], ['أدنى علامة', gs.length ? Math.min(...gs) : '—']]
-      .map(([l, v]) => h('div', { class: 'stat' }, h('div', { class: 'sv' }, String(v)), h('div', { class: 'sl' }, l))));
-    const th = (t, k) => h('th', {}, k ? h('button', { class: 'sortb' + (sortBy === k ? ' on' : ''), onclick: () => { sortBy = k; draw(); } }, t) : t);
-    list.replaceChildren(rows.length ? h('table', { class: 'data' }, h('thead', {}, h('tr', {}, th('الاسم', 'name'), th('العلامة', 'grade'), th('التسليم', 'date'), th('k الحقيقي'), th('k الطالب'), th(''))),
-      h('tbody', {}, ...sorted.map(r => h('tr', {}, h('td', { style: 'text-align:start' }, r.name), h('td', {}, h('b', {}, String(r.grade))), h('td', {}, new Date(r.submittedAt).toLocaleString('ar', { dateStyle: 'short', timeStyle: 'short' })),
-        h('td', { class: 'ltr' }, String(r.kTrue)), h('td', { class: 'ltr' }, String(r.kStudent || '—')), h('td', {}, h('button', { class: 'btn ghost', style: 'padding:3px 10px;font-size:13px', onclick: () => showDetail(r) }, 'تفاصيل'))))))
-      : h('p', { class: 'muted' }, 'لم يسلّم أي طالب بعد. ستظهر العلامات هنا تلقائياً فور تسليم كل طالب.'));
-  };
-  const showDetail = r => {
-    detail.replaceChildren(h('div', { class: 'card', style: 'margin-top:16px' }, h('div', { class: 'eyebrow' }, 'تفاصيل الطالب'), h('h2', {}, r.name + ' · ' + r.grade + '/100'),
-      h('p', {}, 'k الحقيقي ', h('span', { class: 'law' }, r.kTrue + ' N/m'), ' · k الطالب ', h('span', { class: 'law' }, (r.kStudent || '—') + ' N/m'), ' · الميل ', h('span', { class: 'law' }, (r.slopeStudent || '—') + ' m/N'), ' · قراءات صحيحة ', h('b', {}, (r.readingsOk ?? '—') + '/18')),
+// ---------- Excel step ----------
+function excelBlock(locked) {
+  const d = myData();
+  const head = ['الكتلة m (g)', 'القوة F (N)', 'ΔL محاولة 1 (cm)', 'ΔL محاولة 2 (cm)', 'ΔL محاولة 3 (cm)', 'معدل ΔL (cm)', 'معدل ΔL (m)'];
+  const rows = d.rows.map(r => [r.m, r.F, ...r.dl.map(x => isFinite(x) ? +x.toFixed(2) : ''), isFinite(r.avg) ? +r.avg.toFixed(2) : '', isFinite(r.avg) ? +(r.avg / 100).toFixed(4) : '']);
+  const msg = h('div', { class: 'fb' }), holder = h('div');
+  const tsv = [head, ...rows].map(r => r.join('\t')).join('\n');
+  const dl = h('button', { class: 'btn brass', onclick: () => {
+    try { const ws = XLSX.utils.aoa_to_sheet([head, ...rows]); ws['!cols'] = head.map(() => ({ wch: 17 })); const wb = XLSX.utils.book_new(); wb.Workbook = { Views: [{ RTL: true }] };
+      XLSX.utils.book_append_sheet(wb, ws, 'نتائجي'); XLSX.writeFile(wb, 'نتائج النابض ' + S.code + '.xlsx'); msg.textContent = 'إذا لم يبدأ التنزيل، استعمل زر النسخ.'; }
+    catch { msg.textContent = 'تعذّر إنشاء الملف. استعمل زر النسخ.'; } } }, 'نزّل ملف Excel بنتائجك');
+  if (typeof XLSX === 'undefined') dl.hidden = true;
+  const copy = h('button', { class: 'btn ghost', onclick: () => copyText(tsv, msg, holder) }, 'انسخ النتائج للصقها في Excel');
+  const tbl = h('div', { class: 'tblw' }, h('table', { class: 'data' }, h('thead', {}, h('tr', {}, ...head.map(x => h('th', {}, x)))), h('tbody', {}, ...rows.map(r => h('tr', {}, ...r.map(x => h('td', {}, String(x))))))));
+  return h('div', {},
+    h('p', {}, 'هذه نتائجك من التجربة بعد حساب القوة والاستطالة. انقلها إلى Excel وأنشئ رسماً بيانياً:'), tbl,
+    locked ? null : h('div', { class: 'row', style: 'margin:12px 0' }, dl, copy), msg, holder,
+    h('div', { class: 'info' }, h('b', {}, 'خطوات الرسم في Excel'),
+      h('ol', { class: 'steps' },
+        h('li', {}, 'حدّد عمود «القوة F (N)»، ثم اضغط Ctrl وحدّد عمود «معدل ΔL (m)».'),
+        h('li', {}, 'إدراج ← مخطط مبعثر (Scatter) بالنقاط فقط.'),
+        h('li', {}, 'تأكد أن القوة على المحور الأفقي والاستطالة على المحور العمودي، وأضف عنواناً لكل محور مع الوحدة.'),
+        h('li', {}, 'اضغط بالزر الأيمن على النقاط ← إضافة خط اتجاه (Trendline) ← خطي، وفعّل «عرض المعادلة على المخطط».'),
+        h('li', {}, 'خذ صورة للمخطط (أو احفظه كصورة) وارفعها هنا.'))));
+}
+
+// ---------- teacher: register ----------
+function registerView() {
+  app.dataset.view = 'treg'; setWho(''); rail();
+  const em = h('input', { type: 'email', id: 'tem', placeholder: 'name@example.com', style: 'direction:ltr;width:100%;max-width:360px', autocomplete: 'email' });
+  const lb = h('input', { type: 'text', id: 'tlb', placeholder: 'مثال: سابع أ – فيزياء', maxlength: 60, style: 'width:100%;max-width:360px' });
+  const nn = h('input', { type: 'number', id: 'tnn', min: 1, max: 60, value: 30, style: 'width:110px' });
+  const err = h('div', { class: 'err' });
+  const go = h('button', { class: 'btn brass' }, 'أنشئ الصف والرموز');
+  go.onclick = async () => { err.textContent = '';
+    const email = em.value.trim(), label = lb.value.trim(), n = Math.round(+nn.value);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'اكتب بريداً إلكترونياً صحيحاً.'; return; }
+    if (!label) { err.textContent = 'اكتب اسماً للصف.'; return; }
+    if (!(n >= 1 && n <= 60)) { err.textContent = 'عدد الطلاب بين 1 و60.'; return; }
+    busy(go, true, 'جارٍ الإنشاء…');
+    try { const r = await call('registerTeacher', email, label, n, SITE_URL); classCreatedView(r); } catch (e) { busy(go, false); err.textContent = errText(e); } };
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'للمعلم'), h('h2', {}, 'تسجيل صف جديد'),
+    h('p', {}, 'ستحصل على رمز للصف، ومفتاح معلم سرّي، ورمز لكل طالب. لا نطلب أسماء الطلاب: أنت وحدك تعرف صاحب كل رمز.'),
+    h('label', { for: 'tem', class: 'lbl' }, 'بريدك الإلكتروني'), em, h('div', { class: 'hint' }, 'نرسل إليه رمز الصف والمفتاح والرموز، لتستعيدها إذا نسيتها.'),
+    h('label', { for: 'tlb', class: 'lbl' }, 'اسم الصف (يراه الطلاب)'), lb,
+    h('label', { for: 'tnn', class: 'lbl' }, 'عدد الطلاب'), nn, err,
+    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: homeView }, 'رجوع'), go)));
+}
+function codesTable(codes) {
+  return h('div', { class: 'tblw' }, h('table', { class: 'data codes' }, h('thead', {}, h('tr', {}, h('th', {}, 'رقم'), h('th', {}, 'رمز الطالب'), h('th', {}, 'اسم الطالب (يكتبه المعلم)'))),
+    h('tbody', {}, ...codes.map(c => h('tr', {}, h('td', {}, String(c.seat)), h('td', { class: 'ltr', style: 'font-family:var(--f-mono);font-size:16px;letter-spacing:.08em' }, c.code), h('td', { style: 'min-width:180px' }, ''))))));
+}
+function classCreatedView(r) {
+  app.dataset.view = 'tnew'; rail();
+  const msg = h('div', { class: 'fb' }), holder = h('div');
+  const list = r.codes.map(c => c.seat + '\t' + c.code).join('\n');
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'تم إنشاء الصف'), h('h2', {}, r.label),
+    h('div', { class: 'keys' },
+      h('div', {}, h('div', { class: 'hint' }, 'رمز الصف'), h('div', { class: 'code' }, r.classCode)),
+      h('div', {}, h('div', { class: 'hint' }, 'مفتاح المعلم (سرّي)'), h('div', { class: 'code' }, r.teacherKey))),
+    h('div', { class: 'note' }, h('b', {}, 'احفظ رمز الصف ومفتاح المعلم. '), 'تحتاجهما للدخول إلى لوحة صفك. ', r.emailed ? 'أرسلناهما مع الرموز إلى بريدك.' : 'لم نتمكن من إرسال البريد، فاحفظهما الآن.', ' لا تعطِ المفتاح للطلاب.'),
+    h('h3', {}, 'رموز الطلاب'),
+    h('p', { class: 'hint' }, 'نصيحة: أعطِ الطالب الذي رقمه 7 في دفتر العلامات الرمز رقم 7، فتعرف صاحب كل رمز دون كتابة أسماء.'),
+    codesTable(r.codes),
+    h('div', { class: 'row noprint', style: 'margin-top:12px' }, h('button', { class: 'btn ghost', onclick: () => window.print() }, 'اطبع القائمة'), h('button', { class: 'btn ghost', onclick: () => copyText(list, msg, holder) }, 'انسخ الرموز')), msg, holder,
+    h('div', { class: 'actions noprint' }, h('button', { class: 'btn ghost', onclick: homeView }, 'الصفحة الرئيسية'), h('button', { class: 'btn', onclick: () => openDashboard(r.classCode, r.teacherKey) }, 'إلى لوحة الصف'))));
+}
+
+// ---------- teacher: login and dashboard ----------
+function loginView(pre) {
+  app.dataset.view = 'tlogin'; setWho(''); rail();
+  const cc = h('input', { type: 'text', id: 'tcc', placeholder: 'رمز الصف', value: pre || '', autocomplete: 'off', style: 'direction:ltr;text-align:center;font-family:var(--f-mono);width:200px' });
+  const kk = h('input', { type: 'password', id: 'tkk', placeholder: 'مفتاح المعلم', autocomplete: 'off', style: 'direction:ltr;text-align:center;font-family:var(--f-mono);width:200px' });
+  const err = h('div', { class: 'err' });
+  const go = h('button', { class: 'btn' }, 'ادخل');
+  const enter = async () => { err.textContent = ''; busy(go, true, 'جارٍ الدخول…'); try { await openDashboard(cc.value, kk.value); } catch (e) { busy(go, false); err.textContent = errText(e); } };
+  go.onclick = enter; kk.addEventListener('keydown', e => { if (e.key === 'Enter') enter(); });
+  const fe = h('input', { type: 'email', id: 'tfe', placeholder: 'name@example.com', style: 'direction:ltr;width:240px' }), fm = h('div', { class: 'fb' });
+  const fb = h('button', { class: 'btn ghost', style: 'padding:6px 14px' }, 'أرسل لي المعلومات');
+  fb.onclick = async () => { busy(fb, true); try { fm.textContent = await call('forgotKey', fe.value.trim(), SITE_URL); } catch (e) { fm.textContent = errText(e); } busy(fb, false); };
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'للمعلم'), h('h2', {}, 'دخول إلى لوحة الصف'),
+    h('div', { class: 'row' }, h('label', { for: 'tcc', class: 'sr' }, 'رمز الصف'), cc, h('label', { for: 'tkk', class: 'sr' }, 'مفتاح المعلم'), kk, go), err,
+    h('details', { class: 'teacher' }, h('summary', {}, 'نسيت رمز الصف أو المفتاح؟'), h('p', { class: 'hint' }, 'اكتب البريد الذي سجّلت به، ونرسل إليه معلومات كل صفوفك.'), h('div', { class: 'row' }, fe, fb), fm),
+    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: homeView }, 'رجوع'), h('span'))));
+}
+
+// ---------- strengths and weaknesses ----------
+const pctOf = s => s.max ? s.got / s.max : 0;
+const shortTag = s => s.tag.replace('الخطوة ', '');
+function profileView(steps, who) {
+  const st = (steps || []).map(s => ({ ...s, pct: pctOf(s) }));
+  const strong = st.filter(s => s.pct >= 0.8).sort((a, b) => b.pct - a.pct), weak = st.filter(s => s.pct < 0.5).sort((a, b) => a.pct - b.pct);
+  const li = s => h('li', {}, s.tag + ' – ' + s.title, h('span', { class: 'hint' }, ` (${Math.round(s.pct * 100)}%)`));
+  return h('div', { class: 'prof' },
+    h('div', { class: 'pcol good' }, h('b', {}, 'نقاط القوة'), h('div', { class: 'hint' }, '80% فأكثر من علامة القسم'),
+      strong.length ? h('ul', {}, ...strong.map(li)) : h('p', { class: 'hint' }, 'لا يوجد قسم وصل فيه ' + who + ' إلى 80%.')),
+    h('div', { class: 'pcol weak' }, h('b', {}, 'نقاط الضعف'), h('div', { class: 'hint' }, 'أقل من 50% من علامة القسم'),
+      weak.length ? h('ul', {}, ...weak.map(li)) : h('p', { class: 'hint' }, 'لا يوجد قسم أقل من 50%.')));
+}
+function stepBars(list) { // list: [{tag,title,pct}]
+  return h('div', { class: 'bars' }, ...list.map(s => h('div', { class: 'bar' },
+    h('span', { class: 'bl' }, s.tag + ' – ' + s.title),
+    h('span', { class: 'bt' }, h('i', { class: s.pct < 0.5 ? 'low' : s.pct < 0.8 ? 'mid' : 'high', style: `width:${Math.max(2, Math.round(s.pct * 100))}%` })),
+    h('span', { class: 'bv' }, Math.round(s.pct * 100) + '%'))));
+}
+let T = null; // teacher session {classCode, key, data}
+async function openDashboard(classCode, key) {
+  classCode = String(classCode).trim().toUpperCase(); key = String(key).trim().toUpperCase();
+  const data = await call('teacherData', classCode, key);
+  T = { classCode, key, data }; dashboardView();
+}
+const STATUS = { new: 'لم يبدأ', started: 'بدأ ولم يسلّم', submitted: 'سلّم' };
+function dashboardView() {
+  app.dataset.view = 'teacher'; S = null; P = null; rail(); setWho(T.data.label);
+  const d = T.data, rows = d.rows;
+  const done = rows.filter(r => r.status === 'submitted'), gs = done.map(r => r.grade);
+  const msg = h('div', { class: 'fb' }), holder = h('div'), detail = h('div');
+  const refresh = h('button', { class: 'btn ghost', style: 'padding:6px 14px' }, 'تحديث');
+  refresh.onclick = async () => { busy(refresh, true); try { T.data = await call('teacherData', T.classCode, T.key); dashboardView(); } catch (e) { busy(refresh, false); msg.textContent = errText(e); } };
+  const csvRows = [['رقم', 'رمز الطالب', 'الحالة', 'العلامة', 'وقت التسليم', 'k الحقيقي', 'k الطالب', ...(done[0] ? done[0].steps.map(s => s.tag) : [])],
+    ...rows.map(r => [r.seat, r.code, STATUS[r.status] || r.status, r.status === 'submitted' ? r.grade : '', r.submittedAt ? dt(r.submittedAt) : '', r.kTrue || '', r.kStudent || '', ...(r.steps || []).map(s => s.got)])];
+  const exportCsv = () => { const esc = v => '"' + String(v).replace(/"/g, '""') + '"'; const csv = '﻿' + csvRows.map(r => r.map(esc).join(',')).join('\r\n');
+    if (downloadText('علامات ' + d.label + '.csv', csv, 'text/csv')) msg.textContent = 'إذا لم يبدأ التنزيل، استعمل «انسخ الجدول».'; else copyText(csvRows.map(r => r.join('\t')).join('\n'), msg, holder); };
+  const addN = h('input', { type: 'number', id: 'addn', min: 1, max: 20, value: 1, style: 'width:70px' });
+  const addB = h('button', { class: 'btn ghost', style: 'padding:6px 14px' }, 'أضف رموزاً');
+  addB.onclick = async () => { busy(addB, true); try { T.data = await call('addCodes', T.classCode, T.key, Math.round(+addN.value)); dashboardView(); } catch (e) { busy(addB, false); msg.textContent = errText(e); } };
+  const showDetail = async r => {
+    const img = h('div', { class: 'hint' }, r.hasGraph ? 'جارٍ تحميل الرسم البياني…' : 'لم يرفع رسماً بيانياً.');
+    detail.replaceChildren(h('div', { class: 'card', style: 'margin-top:16px' }, h('div', { class: 'eyebrow' }, 'تفاصيل الطالب رقم ' + r.seat), h('h2', {}, r.code + ' · ' + r.grade + ' من 100'),
+      h('p', {}, 'k الحقيقي ', h('span', { class: 'law' }, r.kTrue + ' N/m'), ' · k الطالب ', h('span', { class: 'law' }, (r.kStudent || '—') + ' N/m'), ' · الميل ', h('span', { class: 'law' }, (r.slope || '—') + ' m/N'), ' · قراءات صحيحة ', h('b', {}, (r.readingsOk ?? '—') + ' من 18')),
       h('div', { class: 'tblw' }, h('table', { class: 'data' }, h('tbody', {}, ...(r.steps || []).map(s => h('tr', {}, h('td', { style: 'text-align:start' }, s.tag + ' – ' + s.title), h('td', {}, `${fmt(s.got, 1)} من ${s.max}`)))))),
+      h('h3', {}, 'نقاط القوة والضعف'), profileView(r.steps, 'الطالب'),
       h('h3', {}, 'الأسئلة الخاطئة'), (r.wrong || []).length ? h('ul', { class: 'wrongs' }, ...r.wrong.map(w => h('li', {}, h('b', {}, w.tag + ': '), w.q, h('span', { class: 'hint' }, ` (${fmt(w.got, 1)} من ${w.max})`)))) : h('p', {}, 'لا يوجد.'),
-      r.graph ? h('div', { class: 'up' }, h('span', { class: 'hint' }, 'الرسم البياني الذي رفعه:'), h('img', { src: r.graph, alt: 'رسم الطالب' })) : h('p', { class: 'hint' }, 'لم يرفع رسماً بيانياً.'),
-      h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => detail.replaceChildren() }, 'إغلاق'), allowRetake(r))));
+      img, h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => detail.replaceChildren() }, 'إغلاق'), h('span'))));
     detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (r.hasGraph) { try { const src = await call('getGraph', T.classCode, T.key, r.code); img.replaceChildren(h('div', { class: 'up' }, h('span', { class: 'hint' }, 'الرسم البياني الذي رفعه:'), h('img', { src, alt: 'رسم الطالب' }))); } catch (e) { img.textContent = 'تعذّر تحميل الرسم: ' + errText(e); } }
   };
-  const allowRetake = r => { const b = h('button', { class: 'btn ghost', style: 'border-color:var(--bad);color:var(--bad)' }, 'السماح بإعادة الاختبار');
-    let armed = false;
-    b.onclick = async () => { if (!armed) { armed = true; b.textContent = 'اضغطي مرة أخرى لحذف هذا التسليم'; return; }
-      try { await DB.doc('submissions/' + r.id).delete(); detail.replaceChildren(); msg.textContent = 'حُذف تسليم ' + r.name + '. يستطيع الآن إعادة الاختبار من نفس الحساب.'; } catch { msg.textContent = 'تعذّر الحذف.'; } };
+  const resetBtn = r => { const b = h('button', { class: 'btn ghost mini danger' }, 'إعادة فتح'); let armed = false;
+    b.onclick = async () => { if (!armed) { armed = true; b.textContent = 'تأكيد؟'; return; }
+      busy(b, true); try { T.data = await call('resetCode', T.classCode, T.key, r.code); dashboardView(); msgSet('أُعيد فتح الرمز ' + r.code + '. يستطيع الطالب الدخول به من جديد.'); } catch (e) { busy(b, false); msg.textContent = errText(e); } };
     return b; };
-  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'لوحة المعلمة'), h('h2', {}, 'علامات الطلاب'), sum,
-    h('div', { class: 'row', style: 'justify-content:space-between;margin:14px 0' }, h('span', { class: 'hint' }, 'تتحدّث تلقائياً عند كل تسليم جديد.'), exportBtn), msg, list,
-    h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => { teacherUnsub && teacherUnsub(); teacherUnsub = null; startView(); } }, 'رجوع'), h('span'))), detail);
-  teacherUnsub && teacherUnsub();
-  teacherUnsub = DB.collection('submissions').onSnapshot(snap => { rows = snap.docs.map(d => ({ id: d.id, ...d.data() })); draw(); }, () => { msg.textContent = 'تعذّر تحميل العلامات. أعيدي فتح الصفحة.'; });
-  draw();
+  const msgSet = t => { const m = $('#tmsg'); if (m) m.textContent = t; };
+  const classSteps = done.length ? done[0].steps.map((s, i) => ({ tag: s.tag, title: s.title, pct: done.reduce((a, r) => a + (r.steps[i] ? pctOf(r.steps[i]) : 0), 0) / done.length })) : [];
+  const weakest = classSteps.slice().sort((a, b) => a.pct - b.pct).slice(0, 3).filter(s => s.pct < 0.8);
+  const classBlock = done.length ? h('div', {},
+    h('h3', {}, 'أداء الصف في خطوات البحث العلمي'),
+    h('p', { class: 'hint' }, 'معدل ما حصل عليه الطلاب الذين سلّموا من علامة كل قسم.'),
+    stepBars(classSteps),
+    weakest.length ? h('div', { class: 'note' }, h('b', {}, 'يحتاج الصف إلى مراجعة: '), weakest.map(s => `${s.title} (${Math.round(s.pct * 100)}%)`).join('، ')) : h('div', { class: 'info' }, 'أداء الصف جيد في كل الأقسام (80% فأكثر).')) : null;
+  const weakTags = r => (r.steps || []).filter(s => pctOf(s) < 0.5).map(shortTag).join('، ') || '—';
+  msg.id = 'tmsg';
+  app.replaceChildren(h('section', { class: 'card' }, h('div', { class: 'eyebrow' }, 'لوحة الصف · رمز الصف ' + d.classCode), h('h2', {}, d.label),
+    h('div', { class: 'stats' }, ...[['سلّموا', `${done.length} من ${rows.length}`], ['المعدل', gs.length ? fmt(gs.reduce((a, b) => a + b, 0) / gs.length, 1) : '—'], ['أعلى علامة', gs.length ? Math.max(...gs) : '—'], ['أدنى علامة', gs.length ? Math.min(...gs) : '—']]
+      .map(([l, v]) => h('div', { class: 'stat' }, h('div', { class: 'sv' }, String(v)), h('div', { class: 'sl' }, l)))),
+    h('div', { class: 'row noprint', style: 'justify-content:space-between;margin:14px 0' }, h('div', { class: 'row' }, refresh, h('button', { class: 'btn ghost', style: 'padding:6px 14px', onclick: exportCsv }, 'نزّل العلامات (Excel)'), h('button', { class: 'btn ghost', style: 'padding:6px 14px', onclick: () => copyText(csvRows.map(r => r.join('\t')).join('\n'), msg, holder) }, 'انسخ الجدول'), h('button', { class: 'btn ghost', style: 'padding:6px 14px', onclick: () => window.print() }, 'اطبع')),
+      h('div', { class: 'row' }, addN, addB)), msg, holder, classBlock, h('h3', {}, 'الطلاب'),
+    h('div', { class: 'tblw' }, h('table', { class: 'data' }, h('thead', {}, h('tr', {}, h('th', {}, 'رقم'), h('th', {}, 'رمز الطالب'), h('th', {}, 'الحالة'), h('th', {}, 'العلامة'), h('th', {}, 'أقسام ضعيفة (أقل من 50%)'), h('th', {}, 'التسليم'), h('th', { class: 'noprint' }, ''))),
+      h('tbody', {}, ...rows.map(r => h('tr', { class: 'st-' + r.status }, h('td', {}, String(r.seat)), h('td', { class: 'ltr', style: 'font-family:var(--f-mono)' }, r.code), h('td', {}, h('span', { class: 'pill ' + r.status }, STATUS[r.status] || r.status)),
+        h('td', {}, r.status === 'submitted' ? h('b', {}, String(r.grade)) : '—'), h('td', { style: 'font-size:13px' }, r.status === 'submitted' ? weakTags(r) : ''), h('td', {}, r.submittedAt ? dt(r.submittedAt) : ''),
+        h('td', { class: 'noprint', style: 'white-space:nowrap' }, r.status === 'submitted' ? h('button', { class: 'btn ghost mini', onclick: () => showDetail(r) }, 'تفاصيل') : null, r.status !== 'new' ? resetBtn(r) : null)))))),
+    h('p', { class: 'hint' }, '«إعادة فتح» تحذف تسليم الطالب وتسمح له بالدخول بنفس الرمز من جديد.'),
+    h('div', { class: 'actions noprint' }, h('button', { class: 'btn ghost', onclick: () => { T = null; homeView(); } }, 'خروج'), h('span'))), detail);
 }
 
-startView();
+homeView();
+
 </script>
+</body>
+</html>
